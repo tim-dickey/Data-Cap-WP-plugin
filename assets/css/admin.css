@@ -1,0 +1,539 @@
+/* Visitor Contact Collector - Admin Styles */
+
+/* Statistics Dashboard */
+.vcc-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0 30px 0;
+}
+
+.vcc-stat-box {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vcc-stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vcc-stat-box h3 {
+    margin: 0 0 10px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1d2327;
+    line-height: 1;
+}
+
+.vcc-stat-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #646970;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Admin Table Enhancements */
+.wp-list-table .column-name {
+    width: 25%;
+}
+
+.wp-list-table .column-email {
+    width: 25%;
+}
+
+.wp-list-table .column-phone {
+    width: 20%;
+}
+
+.wp-list-table .column-consent {
+    width: 10%;
+    text-align: center;
+}
+
+.wp-list-table .column-date {
+    width: 15%;
+}
+
+.wp-list-table .column-actions {
+    width: 5%;
+    text-align: center;
+}
+
+/* Consent Status Indicators */
+.vcc-consent-yes {
+    color: #00a32a;
+    font-weight: 600;
+}
+
+.vcc-consent-yes::before {
+    content: "✓ ";
+    font-weight: bold;
+}
+
+.vcc-consent-no {
+    color: #d63638;
+    font-weight: 600;
+}
+
+.vcc-consent-no::before {
+    content: "✗ ";
+    font-weight: bold;
+}
+
+/* Form Preview */
+.vcc-form-preview {
+    background: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.vcc-form-preview .vcc-form-container {
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    max-width: none;
+}
+
+/* Shortcode Info Box */
+.vcc-shortcode-info {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0 0 0;
+}
+
+.vcc-shortcode-info h3 {
+    margin: 0 0 15px 0;
+    color: #1d2327;
+}
+
+.vcc-shortcode-info code {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: inline-block;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+/* Export Options */
+.vcc-export-options {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.vcc-export-options h3 {
+    margin: 0 0 20px 0;
+    color: #1d2327;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 10px;
+}
+
+.vcc-export-options .form-table th {
+    width: 200px;
+    padding-left: 0;
+}
+
+/* Settings Form Enhancements */
+.form-table .vcc-color-preview {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-left: 10px;
+    vertical-align: middle;
+    border: 1px solid #dcdcde;
+}
+
+/* Custom Buttons */
+.vcc-button-secondary {
+    background: #f6f7f7;
+    border: 1px solid #dcdcde;
+    color: #50575e;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.vcc-button-secondary:hover {
+    background: #f0f0f1;
+    border-color: #8c8f94;
+    color: #1d2327;
+}
+
+.vcc-button-danger {
+    background: #d63638;
+    border-color: #d63638;
+    color: #ffffff;
+}
+
+.vcc-button-danger:hover {
+    background: #b32d2e;
+    border-color: #b32d2e;
+    color: #ffffff;
+}
+
+/* Admin Notices Enhancement */
+.notice.vcc-notice {
+    border-left-width: 4px;
+    border-left-style: solid;
+    margin: 5px 15px 2px 0;
+    padding: 12px;
+}
+
+.notice.vcc-notice.notice-success {
+    border-left-color: #00a32a;
+    background-color: #edfaef;
+}
+
+.notice.vcc-notice.notice-error {
+    border-left-color: #d63638;
+    background-color: #fcf0f1;
+}
+
+.notice.vcc-notice.notice-warning {
+    border-left-color: #dba617;
+    background-color: #fcf8e3;
+}
+
+.notice.vcc-notice.notice-info {
+    border-left-color: #72aee6;
+    background-color: #f0f6fc;
+}
+
+/* GDPR Tools Section */
+.vcc-gdpr-tools {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.vcc-gdpr-tools h3 {
+    margin: 0 0 20px 0;
+    color: #1d2327;
+    display: flex;
+    align-items: center;
+}
+
+.vcc-gdpr-tools h3::before {
+    content: "🔒";
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.vcc-gdpr-tool {
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+.vcc-gdpr-tool:last-child {
+    margin-bottom: 0;
+}
+
+.vcc-gdpr-tool h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.vcc-gdpr-tool p {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #646970;
+}
+
+.vcc-gdpr-tool input[type="email"] {
+    width: 250px;
+    margin-right: 10px;
+}
+
+/* Responsive Admin Design */
+@media screen and (max-width: 782px) {
+    .vcc-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wp-list-table .column-phone,
+    .wp-list-table .column-consent,
+    .wp-list-table .column-date {
+        display: none;
+    }
+    
+    .vcc-gdpr-tool input[type="email"] {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}
+
+/* Loading States */
+.vcc-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.vcc-loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: vcc-admin-spin 1s linear infinite;
+}
+
+@keyframes vcc-admin-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tooltip Styles */
+.vcc-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    border-bottom: 1px dotted #646970;
+}
+
+.vcc-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1d2327;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+.vcc-tooltip::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1d2327;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+}
+
+.vcc-tooltip:hover::after,
+.vcc-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Documentation Styles */
+.vcc-shortcode-docs {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 20px 0;
+}
+
+.vcc-shortcode-docs h3,
+.vcc-shortcode-docs h4,
+.vcc-shortcode-docs h5 {
+    color: #1d2327;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.vcc-shortcode-docs h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #0073aa;
+    padding-bottom: 10px;
+}
+
+.vcc-shortcode-docs h4 {
+    color: #0073aa;
+    font-size: 16px;
+}
+
+.vcc-shortcode-docs h5 {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.vcc-shortcode-docs code {
+    background: #f1f1f1;
+    border: 1px solid #dcdcde;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    color: #d63638;
+}
+
+.vcc-shortcode-docs table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.vcc-shortcode-docs table th,
+.vcc-shortcode-docs table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.vcc-shortcode-docs table th {
+    background: #f9f9f9;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.vcc-shortcode-docs table td code {
+    background: #f6f7f7;
+    color: #0073aa;
+}
+
+/* Dark Mode for Admin (if WordPress supports it) */
+@media (prefers-color-scheme: dark) {
+    .vcc-stat-box {
+        background: #2c3338;
+        border-color: #50575e;
+        color: #f0f0f1;
+    }
+    
+    .vcc-stat-box h3 {
+        color: #f0f0f1;
+    }
+    
+    .vcc-stat-box p {
+        color: #a7aaad;
+    }
+    
+    .vcc-shortcode-info,
+    .vcc-export-options,
+    .vcc-gdpr-tools,
+    .vcc-shortcode-docs {
+        background: #2c3338;
+        border-color: #50575e;
+        color: #f0f0f1;
+    }
+    
+    .vcc-shortcode-info h3,
+    .vcc-export-options h3,
+    .vcc-gdpr-tools h3,
+    .vcc-shortcode-docs h3,
+    .vcc-shortcode-docs h4,
+    .vcc-shortcode-docs h5 {
+        color: #f0f0f1;
+    }
+    
+    .vcc-gdpr-tool {
+        background: #1d2327;
+        border-color: #50575e;
+    }
+    
+    .vcc-tooltip::after {
+        background: #f0f0f1;
+        color: #1d2327;
+    }
+    
+    .vcc-tooltip::before {
+        border-top-color: #f0f0f1;
+    }
+}
+
+/* Print Styles for Admin */
+@media print {
+    .vcc-stats-grid {
+        display: block;
+    }
+    
+    .vcc-stat-box {
+        display: inline-block;
+        width: 150px;
+        margin: 10px;
+        box-shadow: none;
+        border: 1px solid #000000;
+    }
+    
+    .vcc-button-secondary,
+    .vcc-button-danger,
+    .button,
+    .button-primary {
+        display: none;
+    }
+}
+
+/* Accessibility Improvements */
+.vcc-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .vcc-stat-box,
+    .vcc-shortcode-info,
+    .vcc-export-options,
+    .vcc-gdpr-tools,
+    .vcc-shortcode-docs {
+        border-width: 2px;
+    }
+    
+    .vcc-consent-yes,
+    .vcc-consent-no {
+        font-weight: 700;
+    }
+}

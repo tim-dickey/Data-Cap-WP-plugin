@@ -1,0 +1,479 @@
+/* Visitor Contact Collector - Frontend Styles */
+
+/* CSS Variables */
+:root {
+    --vcc-primary-color: #0073aa;
+    --vcc-primary-color-hover: #005a87;
+    --vcc-primary-color-light: #e8f4f8;
+    --vcc-text-color: #333333;
+    --vcc-text-light: #666666;
+    --vcc-border-color: #dddddd;
+    --vcc-border-radius: 4px;
+    --vcc-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --vcc-transition: all 0.3s ease;
+    --vcc-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --vcc-spacing-sm: 8px;
+    --vcc-spacing-md: 16px;
+    --vcc-spacing-lg: 24px;
+    --vcc-spacing-xl: 32px;
+}
+
+/* Main Form Container */
+.vcc-form-container {
+    max-width: 500px;
+    margin: 0 auto var(--vcc-spacing-lg) auto;
+    padding: var(--vcc-spacing-lg);
+    background: #ffffff;
+    border: 1px solid var(--vcc-border-color);
+    border-radius: var(--vcc-border-radius);
+    box-shadow: var(--vcc-box-shadow);
+    font-family: var(--vcc-font-family);
+    line-height: 1.5;
+    color: var(--vcc-text-color);
+    box-sizing: border-box;
+}
+
+/* Form Container Styles */
+.vcc-style-rounded {
+    border-radius: 12px;
+}
+
+.vcc-style-square {
+    border-radius: 0;
+}
+
+.vcc-style-minimal {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    padding: var(--vcc-spacing-md);
+}
+
+/* Form Title */
+.vcc-form-title {
+    margin: 0 0 var(--vcc-spacing-md) 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--vcc-text-color);
+    text-align: center;
+}
+
+/* Form Description */
+.vcc-form-description {
+    margin: 0 0 var(--vcc-spacing-lg) 0;
+    font-size: 16px;
+    color: var(--vcc-text-light);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Form Rows */
+.vcc-form-row {
+    margin-bottom: var(--vcc-spacing-lg);
+}
+
+.vcc-form-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Form Fields */
+.vcc-form-field {
+    position: relative;
+}
+
+.vcc-form-field label {
+    display: block;
+    margin-bottom: var(--vcc-spacing-sm);
+    font-weight: 500;
+    color: var(--vcc-text-color);
+    font-size: 14px;
+}
+
+.vcc-form-field input[type="text"],
+.vcc-form-field input[type="email"],
+.vcc-form-field input[type="tel"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--vcc-border-color);
+    border-radius: var(--vcc-border-radius);
+    font-size: 16px;
+    font-family: var(--vcc-font-family);
+    background-color: #ffffff;
+    color: var(--vcc-text-color);
+    transition: var(--vcc-transition);
+    box-sizing: border-box;
+    outline: none;
+}
+
+.vcc-form-field input[type="text"]:focus,
+.vcc-form-field input[type="email"]:focus,
+.vcc-form-field input[type="tel"]:focus {
+    border-color: var(--vcc-primary-color);
+    box-shadow: 0 0 0 3px var(--vcc-primary-color-light);
+}
+
+.vcc-form-field input[type="text"]:invalid,
+.vcc-form-field input[type="email"]:invalid,
+.vcc-form-field input[type="tel"]:invalid {
+    border-color: #dc3545;
+}
+
+.vcc-form-field input[type="text"]:invalid:focus,
+.vcc-form-field input[type="email"]:invalid:focus,
+.vcc-form-field input[type="tel"]:invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Required Field Indicator */
+.vcc-required {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Checkbox Field */
+.vcc-checkbox-field {
+    margin-top: var(--vcc-spacing-md);
+}
+
+.vcc-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.vcc-checkbox-label input[type="checkbox"] {
+    margin: 0 var(--vcc-spacing-sm) 0 0;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--vcc-primary-color);
+}
+
+.vcc-checkbox-text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--vcc-text-light);
+}
+
+/* Submit Button */
+.vcc-form-submit {
+    text-align: center;
+    margin-top: var(--vcc-spacing-xl);
+}
+
+.vcc-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    background-color: var(--vcc-primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--vcc-border-radius);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--vcc-font-family);
+    cursor: pointer;
+    transition: var(--vcc-transition);
+    text-decoration: none;
+    min-width: 140px;
+    min-height: 48px;
+    outline: none;
+}
+
+.vcc-submit-btn:hover {
+    background-color: var(--vcc-primary-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vcc-submit-btn:focus {
+    box-shadow: 0 0 0 3px var(--vcc-primary-color-light);
+}
+
+.vcc-submit-btn:active {
+    transform: translateY(0);
+}
+
+.vcc-submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Loading Spinner */
+.vcc-submit-spinner {
+    margin-left: var(--vcc-spacing-sm);
+}
+
+.vcc-spinner {
+    width: 20px;
+    height: 20px;
+    animation: vcc-spin 1s linear infinite;
+}
+
+.vcc-spinner-path {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: vcc-dash 1.5s ease-in-out infinite;
+}
+
+@keyframes vcc-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes vcc-dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+/* Messages */
+.vcc-messages {
+    margin-bottom: var(--vcc-spacing-lg);
+}
+
+.vcc-message {
+    padding: 12px 16px;
+    border-radius: var(--vcc-border-radius);
+    margin-bottom: var(--vcc-spacing-md);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.vcc-message:last-child {
+    margin-bottom: 0;
+}
+
+.vcc-message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.vcc-message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.vcc-message-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Field Errors */
+.vcc-field-error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+}
+
+.vcc-field-error.vcc-show {
+    display: block;
+}
+
+.vcc-form-field.vcc-has-error input {
+    border-color: #dc3545;
+}
+
+.vcc-form-field.vcc-has-error input:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .vcc-form-container {
+        margin: 0 0 var(--vcc-spacing-md) 0;
+        padding: var(--vcc-spacing-md);
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+    
+    .vcc-style-rounded {
+        border-radius: 0;
+    }
+    
+    .vcc-form-title {
+        font-size: 20px;
+    }
+    
+    .vcc-form-description {
+        font-size: 14px;
+    }
+    
+    .vcc-form-field input[type="text"],
+    .vcc-form-field input[type="email"],
+    .vcc-form-field input[type="tel"] {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .vcc-submit-btn {
+        width: 100%;
+        padding: 16px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vcc-form-container {
+        padding: var(--vcc-spacing-sm);
+    }
+    
+    .vcc-form-row {
+        margin-bottom: var(--vcc-spacing-md);
+    }
+    
+    .vcc-form-submit {
+        margin-top: var(--vcc-spacing-lg);
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .vcc-form-container {
+        border-width: 2px;
+    }
+    
+    .vcc-form-field input[type="text"],
+    .vcc-form-field input[type="email"],
+    .vcc-form-field input[type="tel"] {
+        border-width: 2px;
+    }
+    
+    .vcc-submit-btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .vcc-form-field input[type="text"],
+    .vcc-form-field input[type="email"],
+    .vcc-form-field input[type="tel"],
+    .vcc-submit-btn {
+        transition: none;
+    }
+    
+    .vcc-spinner,
+    .vcc-spinner-path {
+        animation: none;
+    }
+    
+    .vcc-submit-btn:hover {
+        transform: none;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .vcc-form-container {
+        background-color: #1a1a1a;
+        border-color: #404040;
+        color: #ffffff;
+    }
+    
+    .vcc-form-title {
+        color: #ffffff;
+    }
+    
+    .vcc-form-description {
+        color: #cccccc;
+    }
+    
+    .vcc-form-field label {
+        color: #ffffff;
+    }
+    
+    .vcc-form-field input[type="text"],
+    .vcc-form-field input[type="email"],
+    .vcc-form-field input[type="tel"] {
+        background-color: #2a2a2a;
+        border-color: #404040;
+        color: #ffffff;
+    }
+    
+    .vcc-form-field input[type="text"]:focus,
+    .vcc-form-field input[type="email"]:focus,
+    .vcc-form-field input[type="tel"]:focus {
+        border-color: var(--vcc-primary-color);
+    }
+    
+    .vcc-checkbox-text {
+        color: #cccccc;
+    }
+    
+    .vcc-message-success {
+        background-color: #1e3a2e;
+        color: #4ade80;
+        border-color: #16a34a;
+    }
+    
+    .vcc-message-error {
+        background-color: #3a1e1e;
+        color: #f87171;
+        border-color: #dc2626;
+    }
+    
+    .vcc-message-info {
+        background-color: #1e2a3a;
+        color: #60a5fa;
+        border-color: #2563eb;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .vcc-form-container {
+        box-shadow: none;
+        border: 1px solid #000000;
+    }
+    
+    .vcc-submit-btn {
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #000000;
+    }
+}
+
+/* Focus Visible for Better Accessibility */
+.vcc-form-field input:focus-visible,
+.vcc-submit-btn:focus-visible,
+.vcc-checkbox-label input:focus-visible {
+    outline: 2px solid var(--vcc-primary-color);
+    outline-offset: 2px;
+}
+
+/* Custom Scrollbar for WebKit Browsers */
+.vcc-form-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.vcc-form-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.vcc-form-container::-webkit-scrollbar-thumb {
+    background: var(--vcc-border-color);
+    border-radius: 4px;
+}
+
+.vcc-form-container::-webkit-scrollbar-thumb:hover {
+    background: var(--vcc-text-light);
+}
