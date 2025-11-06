@@ -1,0 +1,56 @@
+{
+  "name": "visitor-contact-collector",
+  "version": "1.0.0",
+  "description": "WordPress plugin for collecting visitor contact information",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:quick": "jest --passWithNoTests --silent",
+    "test:frontend": "jest tests/js/frontend.test.js",
+    "test:admin": "jest tests/js/admin.test.js",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "postcss assets/css/frontend.css -o dist/css/frontend.min.css --map",
+    "build:js": "uglifyjs assets/js/frontend.js -o dist/js/frontend.min.js --source-map",
+    "lint": "eslint assets/js/ --ext .js",
+    "lint:fix": "eslint assets/js/ --ext .js --fix",
+    "format": "prettier --write assets/js/**/*.js",
+    "dev": "npm run build && npm run test:watch",
+    "ci": "npm run lint && npm run test:coverage && npm run build"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "jsdom": "^22.1.0",
+    "@jest/environment-jsdom": "^29.5.0",
+    "eslint": "^8.42.0",
+    "prettier": "^2.8.8",
+    "postcss": "^8.4.24",
+    "postcss-cli": "^10.1.0",
+    "uglify-js": "^3.17.4"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/tests/js/setup.js"],
+    "collectCoverageFrom": [
+      "assets/js/**/*.js",
+      "!assets/js/**/*.min.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "html",
+      "text",
+      "lcov"
+    ],
+    "testMatch": [
+      "<rootDir>/tests/js/**/*.test.js"
+    ],
+    "setupFiles": ["<rootDir>/tests/js/env.setup.js"],
+    "globals": {
+      "VCC_ENVIRONMENT": "testing",
+      "VCC_DEBUG": true,
+      "VCC_TEST_MODE": true
+    }
+  },
+  "author": "Your Name",
+  "license": "GPL-2.0+"
+}

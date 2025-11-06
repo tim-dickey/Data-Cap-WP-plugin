@@ -1,0 +1,17 @@
+{
+  "name": "phpmd",
+  "version": "1.0.0",
+  "rules": {
+    "cleancode": "rulesets/cleancode.xml",
+    "codesize": "rulesets/codesize.xml",
+    "controversial": "rulesets/controversial.xml",
+    "design": "rulesets/design.xml",
+    "naming": "rulesets/naming.xml",
+    "unusedcode": "rulesets/unusedcode.xml"
+  },
+  "exclude": [
+    "vendor/",
+    "node_modules/",
+    "tests/"
+  ]
+}

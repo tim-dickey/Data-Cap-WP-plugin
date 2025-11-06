@@ -1,0 +1,275 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  WP_TESTS_DIR: /tmp/wordpress-tests-lib
+  WP_CORE_DIR: /tmp/wordpress/
+  WP_TEST_DB_NAME: wordpress_test
+  WP_TEST_DB_USER: root
+  WP_TEST_DB_PASS: root
+  WP_TEST_DB_HOST: localhost
+  WP_TEST_VERSION: latest
+
+jobs:
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, xml, ctype, json, tokenizer
+        coverage: xdebug
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Setup environment file
+      run: |
+        cp .env.example .env
+        echo "WP_TEST_DB_NAME=${{ env.WP_TEST_DB_NAME }}" >> .env
+        echo "WP_TEST_DB_USER=${{ env.WP_TEST_DB_USER }}" >> .env
+        echo "WP_TEST_DB_PASS=${{ env.WP_TEST_DB_PASS }}" >> .env
+        echo "WP_TEST_DB_HOST=${{ env.WP_TEST_DB_HOST }}" >> .env
+        echo "WP_TEST_VERSION=${{ env.WP_TEST_VERSION }}" >> .env
+        echo "VCC_ENVIRONMENT=testing" >> .env
+        echo "VCC_DEBUG=true" >> .env
+        echo "VCC_TEST_MODE=true" >> .env
+      env:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+        
+    - name: Install PHP dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      
+    - name: Install Node.js dependencies
+      run: npm ci
+      
+    - name: Run Codacy Analysis
+      id: codacy-analysis
+      continue-on-error: true
+      run: |
+        # Install Codacy CLI if not available
+        if ! command -v codacy-analysis-cli &> /dev/null; then
+          curl -Ls https://github.com/codacy/codacy-analysis-cli/releases/latest/download/codacy-analysis-cli-linux -o codacy-analysis-cli
+          chmod +x codacy-analysis-cli
+          sudo mv codacy-analysis-cli /usr/local/bin/
+        fi
+        
+        # Run analysis on all PHP files
+        for file in $(find . -name "*.php" -not -path "./vendor/*" -not -path "./tests/*"); do
+          echo "Analyzing $file"
+          codacy-analysis-cli analyze --file "$file" --format json || true
+        done
+        
+        # Run analysis on all JS files
+        for file in $(find . -name "*.js" -not -path "./node_modules/*"); do
+          echo "Analyzing $file"
+          codacy-analysis-cli analyze --file "$file" --format json || true
+        done
+
+  php-tests:
+    name: PHP Tests
+    runs-on: ubuntu-latest
+    needs: code-quality
+    
+    strategy:
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2']
+        wordpress-version: ['6.0', '6.1', '6.2', '6.3', '6.4']
+        
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.WP_TEST_DB_PASS }}
+          MYSQL_DATABASE: ${{ env.WP_TEST_DB_NAME }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, xml, ctype, json, tokenizer, mysql
+        coverage: xdebug
+
+    - name: Setup environment file
+      run: |
+        cp .env.example .env
+        echo "WP_TEST_DB_NAME=${{ env.WP_TEST_DB_NAME }}" >> .env
+        echo "WP_TEST_DB_USER=${{ env.WP_TEST_DB_USER }}" >> .env
+        echo "WP_TEST_DB_PASS=${{ env.WP_TEST_DB_PASS }}" >> .env
+        echo "WP_TEST_DB_HOST=${{ env.WP_TEST_DB_HOST }}" >> .env
+        echo "WP_TEST_VERSION=${{ env.WP_TEST_VERSION }}" >> .env
+        echo "VCC_ENVIRONMENT=testing" >> .env
+        echo "VCC_DEBUG=true" >> .env
+        echo "VCC_TEST_MODE=true" >> .env
+        
+    - name: Install dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      
+    - name: Setup WordPress test environment
+      run: |
+        bash bin/install-wp-tests.sh ${{ env.WP_TEST_DB_NAME }} ${{ env.WP_TEST_DB_USER }} ${{ env.WP_TEST_DB_PASS }} ${{ env.WP_TEST_DB_HOST }} ${{ matrix.wordpress-version }}
+        
+    - name: Run PHPUnit tests
+      run: |
+        vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-clover coverage.xml
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: php-${{ matrix.php-version }}-wp-${{ matrix.wordpress-version }}
+
+  javascript-tests:
+    name: JavaScript Tests
+    runs-on: ubuntu-latest
+    needs: code-quality
+    
+    strategy:
+      matrix:
+        node-version: ['16', '18', '20']
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Setup environment file
+      run: |
+        cp .env.example .env
+        echo "VCC_ENVIRONMENT=testing" >> .env
+        echo "VCC_DEBUG=true" >> .env
+        echo "VCC_TEST_MODE=true" >> .env
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run Jest tests
+      run: npm run test:coverage
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: javascript-node-${{ matrix.node-version }}
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: [php-tests, javascript-tests]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  build-plugin:
+    name: Build Plugin Package
+    runs-on: ubuntu-latest
+    needs: [php-tests, javascript-tests, security-scan]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Setup environment file
+      run: |
+        cp .env.example .env
+        echo "VCC_ENVIRONMENT=production" >> .env
+        echo "VCC_DEBUG=false" >> .env
+        echo "VCC_TEST_MODE=false" >> .env
+        echo "VCC_MINIFY_CSS=true" >> .env
+        echo "VCC_MINIFY_JS=true" >> .env
+        echo "VCC_COMPRESS_IMAGES=true" >> .env
+        
+    - name: Install dependencies and build assets
+      run: |
+        npm ci
+        npm run build
+        
+    - name: Create plugin package
+      run: |
+        # Create distribution directory
+        mkdir -p dist/visitor-contact-collector
+        
+        # Copy plugin files (exclude development files)
+        rsync -av --exclude-from='.distignore' . dist/visitor-contact-collector/
+        
+        # Create ZIP package
+        cd dist
+        zip -r visitor-contact-collector.zip visitor-contact-collector/
+        
+    - name: Upload plugin artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: plugin-package
+        path: dist/visitor-contact-collector.zip
+
+  deploy:
+    name: Deploy to WordPress.org
+    runs-on: ubuntu-latest
+    needs: build-plugin
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download plugin package
+      uses: actions/download-artifact@v3
+      with:
+        name: plugin-package
+        
+    - name: Deploy to WordPress.org SVN
+      uses: 10up/action-wordpress-plugin-deploy@stable
+      if: env.SVN_USERNAME && env.SVN_PASSWORD
+      env:
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}

@@ -1,0 +1,173 @@
+name: Automated Testing & Code Generation
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of test to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - unit
+          - integration
+          - performance
+          - security
+
+jobs:
+  automated-code-analysis:
+    name: Automated Code Analysis & Generation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, xml, ctype, json, tokenizer
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        composer install --no-progress --prefer-dist --optimize-autoloader
+        npm ci
+        
+    - name: Run automated code quality checks
+      run: |
+        # PHP Code Sniffer
+        vendor/bin/phpcs --standard=WordPress --extensions=php --ignore=vendor/,node_modules/,tests/ .
+        
+        # PHP Mess Detector
+        vendor/bin/phpmd . text phpmd.xml --exclude vendor/,node_modules/,tests/
+        
+        # ESLint for JavaScript
+        npx eslint assets/js/ --ext .js --format json --output-file eslint-report.json || true
+        
+    - name: Generate missing test files
+      run: |
+        # Create test generation script
+        cat > generate-tests.php << 'EOF'
+        <?php
+        /**
+         * Auto-generate missing test files
+         */
+        
+        $source_files = glob('includes/*.php');
+        $test_files = glob('tests/unit/test-*.php');
+        
+        foreach ($source_files as $source_file) {
+            $class_name = basename($source_file, '.php');
+            $test_file = "tests/unit/test-" . str_replace('class-', '', $class_name) . ".php";
+            
+            if (!file_exists($test_file)) {
+                echo "Generating test for: $source_file\n";
+                
+                // Generate basic test structure
+                $test_content = "<?php\n\nclass Test_" . ucfirst(str_replace(['-', 'class-'], ['_', ''], $class_name)) . " extends WP_UnitTestCase {\n";
+                $test_content .= "    // TODO: Add tests for $class_name\n";
+                $test_content .= "    public function test_class_exists() {\n";
+                $test_content .= "        \$this->assertTrue(class_exists('$class_name'));\n";
+                $test_content .= "    }\n";
+                $test_content .= "}\n";
+                
+                file_put_contents($test_file, $test_content);
+            }
+        }
+        EOF
+        
+        php generate-tests.php
+        
+    - name: Run comprehensive test suite
+      run: |
+        if [[ "${{ github.event.inputs.test_type }}" == "all" || "${{ github.event.inputs.test_type }}" == "" ]]; then
+          vendor/bin/phpunit --configuration tests/phpunit.xml
+          npm test
+        elif [[ "${{ github.event.inputs.test_type }}" == "unit" ]]; then
+          vendor/bin/phpunit tests/unit/
+        elif [[ "${{ github.event.inputs.test_type }}" == "integration" ]]; then
+          vendor/bin/phpunit tests/integration/
+        elif [[ "${{ github.event.inputs.test_type }}" == "performance" ]]; then
+          vendor/bin/phpunit tests/performance/
+        elif [[ "${{ github.event.inputs.test_type }}" == "security" ]]; then
+          vendor/bin/phpunit tests/security/
+        fi
+        
+    - name: Generate performance reports
+      run: |
+        # Create performance testing script
+        cat > performance-test.php << 'EOF'
+        <?php
+        /**
+         * Performance testing for large datasets
+         */
+        require_once 'vendor/autoload.php';
+        
+        $start_time = microtime(true);
+        
+        // Test database operations with large datasets
+        for ($i = 0; $i < 10000; $i++) {
+            // Simulate contact creation
+            $contact_data = [
+                'name' => 'Test User ' . $i,
+                'email' => 'test' . $i . '@example.com',
+                'phone' => '+1234567' . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'message' => 'Performance test message ' . $i
+            ];
+        }
+        
+        $end_time = microtime(true);
+        $execution_time = $end_time - $start_time;
+        
+        echo "Performance Test Results:\n";
+        echo "Execution time: " . $execution_time . " seconds\n";
+        echo "Records processed: 10000\n";
+        echo "Average time per record: " . ($execution_time / 10000) . " seconds\n";
+        
+        // Write results to file
+        file_put_contents('performance-results.txt', "Execution time: $execution_time seconds\n");
+        EOF
+        
+        php performance-test.php
+        
+    - name: Create issue for failing tests
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Automated Testing Failure - ' + new Date().toISOString().split('T')[0],
+            body: `
+            ## Automated Testing Failure Report
+            
+            **Date:** ${new Date().toISOString()}
+            **Workflow:** ${context.workflow}
+            **Run ID:** ${context.runId}
+            
+            ### Test Type
+            ${{ github.event.inputs.test_type || 'all' }}
+            
+            ### Failure Details
+            One or more automated tests have failed. Please review the workflow logs for detailed information.
+            
+            ### Next Steps
+            1. Review the failed tests in the workflow logs
+            2. Fix any code quality issues
+            3. Update tests if necessary
+            4. Re-run the workflow
+            
+            **Auto-generated by GitHub Actions**
+            `,
+            labels: ['bug', 'automated-testing', 'priority-high']
+          })

@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Visitor Contact Collector
- * Plugin URI: https://www.timdickey.com
+ * Plugin URI: https://www.yourwebsite.com
  * Description: A WordPress plugin that collects visitor contact information (Full Name, Email, Mobile Phone) to build a contact list with GDPR compliance.
  * Version: 1.0.0
- * Author: Tim Dickey
- * Author URI: https://www.timdickey.com
+ * Author: Your Name
+ * Author URI: https://www.yourwebsite.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: visitor-contact-collector
@@ -71,6 +71,7 @@ class VisitorContactCollector {
      * Include required files
      */
     private function includes() {
+        require_once VCC_PLUGIN_PATH . 'includes/class-vcc-config.php';
         require_once VCC_PLUGIN_PATH . 'includes/class-vcc-database.php';
         require_once VCC_PLUGIN_PATH . 'includes/class-vcc-admin.php';
         require_once VCC_PLUGIN_PATH . 'includes/class-vcc-frontend.php';
@@ -83,6 +84,9 @@ class VisitorContactCollector {
      * Initialize hooks
      */
     private function init_hooks() {
+        // Initialize configuration
+        VCC_Config::get_instance();
+        
         // Initialize database
         VCC_Database::get_instance();
         
@@ -117,7 +121,10 @@ class VisitorContactCollector {
         // Create database table
         VCC_Database::create_table();
         
-        // Set default options
+        // Get configuration instance
+        $config = VCC_Config::get_instance();
+        
+        // Set default options using configuration
         $default_options = array(
             'form_title' => __('Join Our Contact List', 'visitor-contact-collector'),
             'form_description' => __('Stay connected with us by sharing your contact information.', 'visitor-contact-collector'),
@@ -125,11 +132,11 @@ class VisitorContactCollector {
             'success_message' => __('Thank you for joining our contact list!', 'visitor-contact-collector'),
             'enable_gdpr' => 1,
             'gdpr_text' => __('I agree to the privacy policy and terms of service.', 'visitor-contact-collector'),
-            'email_notifications' => 0,
-            'notification_email' => get_option('admin_email'),
+            'email_notifications' => $config->get('email_notifications') ? 1 : 0,
+            'notification_email' => $config->get('default_admin_email'),
             'form_style' => 'rounded',
             'primary_color' => '#0073aa',
-            'data_retention_days' => 365
+            'data_retention_days' => $config->get('data_retention_days')
         );
         
         add_option('vcc_settings', $default_options);
@@ -224,6 +231,13 @@ function vcc_get_settings() {
     
     $settings = get_option('vcc_settings', $defaults);
     return wp_parse_args($settings, $defaults);
+}
+
+/**
+ * Helper function to get configuration instance
+ */
+function vcc_config() {
+    return VCC_Config::get_instance();
 }
 
 /**

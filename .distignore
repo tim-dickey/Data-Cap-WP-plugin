@@ -1,0 +1,60 @@
+# Distribution ignore file
+# Files to exclude from plugin distribution package
+
+# Development files
+.git/
+.github/
+node_modules/
+vendor/
+coverage/
+tests/
+scripts/
+bin/
+
+# Build tools
+package.json
+package-lock.json
+composer.json
+composer.lock
+phpunit.xml
+.eslintrc.js
+.prettierrc
+postcss.config.js
+webpack.config.js
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+Thumbs.db
+
+# Source maps and development assets
+*.map
+src/
+assets/css/*.css
+assets/js/*.js
+!assets/css/*.min.css
+!assets/js/*.min.js
+
+# Logs and temporary files
+*.log
+*.tmp
+.temp/
+.cache/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Backup files
+*.bak
+*.backup
+*~

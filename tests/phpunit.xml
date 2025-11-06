@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<phpunit
+    bootstrap="bootstrap.php"
+    backupGlobals="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    >
+    <testsuites>
+        <testsuite name="unit">
+            <directory>./unit/</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>./integration/</directory>
+        </testsuite>
+        <testsuite name="Visitor Contact Collector Test Suite">
+            <directory>./unit/</directory>
+            <directory>./integration/</directory>
+        </testsuite>
+    </testsuites>
+    
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../includes/</directory>
+            <file>../visitor-contact-collector.php</file>
+        </whitelist>
+    </filter>
+    
+    <logging>
+        <log type="coverage-html" target="coverage"/>
+        <log type="coverage-clover" target="clover.xml"/>
+    </logging>
+    
+    <php>
+        <!-- Environment variables for testing -->
+        <env name="VCC_ENVIRONMENT" value="testing"/>
+        <env name="VCC_DEBUG" value="true"/>
+        <env name="VCC_TEST_MODE" value="true"/>
+        <env name="VCC_EMAIL_NOTIFICATIONS" value="false"/>
+        <env name="VCC_RATE_LIMIT_ENABLED" value="false"/>
+        <env name="VCC_AUTO_CLEANUP" value="false"/>
+        <env name="VCC_TRACKING_ENABLED" value="false"/>
+        <env name="VCC_ERROR_REPORTING" value="true"/>
+        <env name="VCC_LOG_ERRORS" value="true"/>
+        
+        <!-- WordPress test configuration -->
+        <env name="WP_TEST_DB_NAME" value="wordpress_test"/>
+        <env name="WP_TEST_DB_USER" value="root"/>
+        <env name="WP_TEST_DB_PASS" value="root"/>
+        <env name="WP_TEST_DB_HOST" value="localhost"/>
+        <env name="WP_TEST_VERSION" value="latest"/>
+        
+        <!-- Test email configuration -->
+        <env name="VCC_TEST_EMAIL" value="test@example.com"/>
+        <env name="VCC_DEFAULT_ADMIN_EMAIL" value="admin@example.com"/>
+        
+        <!-- Coverage threshold -->
+        <env name="VCC_COVERAGE_THRESHOLD" value="80"/>
+    </php>
+</phpunit>

@@ -215,7 +215,7 @@ We welcome contributions to improve the Visitor Contact Collector plugin:
 
 If you encounter any issues:
 
-1. Check the [Issues](https://github.com/tim-dickey/Data-Cap-WP-plugin/issues) page
+1. Check the [Issues](https://github.com/your-username/Data-Cap-WP-plugin/issues) page
 2. Search for existing reports
 3. Create a new issue with:
    - WordPress version
@@ -230,7 +230,7 @@ For support and questions:
 
 - **Documentation**: Check this README and inline code comments
 - **Issues**: Use the GitHub Issues page for bug reports
-- **Contact**: Visit [timdickey.com](https://www.timdickey.com) for direct contact
+- **Contact**: Visit [yourwebsite.com](https://www.yourwebsite.com) for direct contact
 
 ## 📄 License
 
@@ -259,4 +259,4 @@ GNU General Public License for more details.
 
 **Made with ❤️ for WordPress**
 
-For more information, visit [timdickey.com](https://www.timdickey.com)
+For more information, visit [yourwebsite.com](https://www.yourwebsite.com)
