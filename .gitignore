@@ -1,4 +1,39 @@
+# Environment files - NEVER commit these
+.env
+.env.local
+.env.*.local
 
+# WordPress
+wp-config.php
 
-#Ignore vscode AI rules
-.github\instructions\codacy.instructions.md
+# Dependencies
+node_modules/
+vendor/
+
+# Build artifacts
+dist/
+build/
+*.min.css
+*.min.js
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PHP test artifacts
+/tmp/
+coverage/
+.phpunit.result.cache
+
+# Ignore AI instruction files
+.github/instructions/codacy.instructions.md
