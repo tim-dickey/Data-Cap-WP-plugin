@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Visitor Contact Collector
- * Plugin URI: https://www.yourwebsite.com
+ * Plugin URI: https://github.com/tim-dickey/Data-Cap-WP-plugin
  * Description: A WordPress plugin that collects visitor contact information (Full Name, Email, Mobile Phone) to build a contact list with GDPR compliance.
  * Version: 1.0.0
- * Author: Your Name
- * Author URI: https://www.yourwebsite.com
+ * Author: Tim Dickey
+ * Author URI: https://www.timdickey.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: visitor-contact-collector
