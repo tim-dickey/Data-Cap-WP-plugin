@@ -1,0 +1,66 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the bug
+      placeholder: "Describe the bug here..."
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to...
+        2. Click on...
+        3. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: "Describe the expected behavior..."
+    validations:
+      required: true
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: "Describe what actually happened..."
+    validations:
+      required: true
+  - type: input
+    id: wordpress_version
+    attributes:
+      label: WordPress Version
+      description: What version of WordPress are you using?
+      placeholder: "e.g., 6.2"
+  - type: input
+    id: plugin_version
+    attributes:
+      label: Plugin Version
+      description: What version of Visitor Contact Collector are you using?
+      placeholder: "e.g., 1.0.0"
+  - type: input
+    id: php_version
+    attributes:
+      label: PHP Version
+      description: What version of PHP are you using?
+      placeholder: "e.g., 8.1"
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any additional information (error logs, screenshots, etc.)
+      placeholder: "Add any other context about the bug..."
+    validations:
+      required: false
