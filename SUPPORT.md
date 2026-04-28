@@ -2,7 +2,7 @@
 
 ## Getting Help
 
-Thank you for using the Data Cap WP Plugin! If you need help, here are the best resources:
+Thank you for using Visitor Contact Collector! If you need help, here are the best resources:
 
 ### Documentation
 

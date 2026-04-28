@@ -1,8 +1,8 @@
-# Contributing to Data Cap WP Plugin
+# Contributing to Visitor Contact Collector
 
 ## Welcome!
 
-Thank you for considering a contribution to the Data Cap WP Plugin! This document provides guidelines and instructions for contributing to the project.
+Thank you for considering a contribution to Visitor Contact Collector! This document provides guidelines and instructions for contributing to the project.
 
 ## Ways to Contribute
 
@@ -20,7 +20,7 @@ There are many ways you can contribute to this project:
 ### Prerequisites
 
 - **PHP**: 7.4 or higher
-- **Node.js**: 14.0 or higher
+- **Node.js**: 16.0 or higher
 - **WordPress**: Latest development version
 - **Git**: For version control
 
@@ -114,7 +114,7 @@ When reporting a bug, include:
 
 ## License Agreement
 
-By contributing to this project, you agree that your contributions will be licensed under the same license as the project (typically GPL v2 or later for WordPress plugins). You represent that you have the right to grant this license and that your contributions do not violate any third-party rights.
+By contributing to this project, you agree that your contributions will be licensed under the same license as the project, GPL v2 or later. You represent that you have the right to grant this license and that your contributions do not violate any third-party rights.
 
 ## Questions?
 

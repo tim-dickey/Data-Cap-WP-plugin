@@ -12,19 +12,15 @@ We recommend always using the latest version to receive security updates and bug
 
 ## Reporting a Vulnerability
 
-We take security seriously and appreciate responsible disclosure. If you discover a security vulnerability in the Data Cap WP Plugin, **please do not open a public GitHub issue**.
+We take security seriously and appreciate responsible disclosure. If you discover a security vulnerability in Visitor Contact Collector, **please do not open a public GitHub issue**.
 
 ### How to Report
 
-Please report security vulnerabilities in one of the following ways:
+Please report security vulnerabilities using the following private channel:
 
-1. **GitHub Security Advisory** (Recommended):
+1. **GitHub Security Advisory**:
    - Use GitHub's [security advisory feature](https://github.com/tim-dickey/Data-Cap-WP-plugin/security/advisories/new) to privately report the vulnerability
    - This creates a private discussion with the maintainers
-
-2. **Email**:
-   - Send a detailed report to: **tim-dickey@users.noreply.github.com**
-   - Include steps to reproduce, affected versions, and potential impact
 
 ### What to Include
 
@@ -46,7 +42,7 @@ When reporting a vulnerability, please provide:
 
 ## Security Best Practices
 
-When using the Data Cap WP Plugin:
+When using Visitor Contact Collector:
 - Keep WordPress and all plugins updated
 - Use strong, unique passwords
 - Regularly backup your site

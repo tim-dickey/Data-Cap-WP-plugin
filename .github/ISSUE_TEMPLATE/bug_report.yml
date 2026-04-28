@@ -48,7 +48,7 @@ body:
     id: plugin_version
     attributes:
       label: Plugin Version
-      description: What version of the Data Cap WP Plugin are you using?
+      description: What version of Visitor Contact Collector are you using?
       placeholder: "e.g., 1.0.0"
   - type: input
     id: php_version
